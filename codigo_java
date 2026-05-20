@@ -1,0 +1,156 @@
+import java.util.Scanner;
+
+class Estudiante {
+
+    // Atributos privados
+    private String cedula;
+    private String nombre;
+    private String apellido;
+    private double nota1;
+    private double nota2;
+    private double nota3;
+    private double promedio;
+
+    public Estudiante() {
+        cedula = "";
+        nombre = "";
+        apellido = "";
+        nota1 = 0;
+        nota2 = 0;
+        nota3 = 0;
+        promedio = 0;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setNota1(double nota1) {
+        this.nota1 = nota1;
+    }
+
+    public void setNota2(double nota2) {
+        this.nota2 = nota2;
+    }
+
+    public void setNota3(double nota3) {
+        this.nota3 = nota3;
+    }
+
+    // Métodos get
+    public String getCedula() {
+        return cedula;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public double getPromedio() {
+        return promedio;
+    }
+
+    public void calcularPromedio() {
+        promedio = (nota1 + nota2 + nota3) / 3;
+    }
+
+    public String determinarEstado() {
+
+        if (promedio >= 7) {
+            return "Aprobado";
+        } else {
+            return "Reprobado";
+        }
+    }
+
+    public void mostrarDatos() {
+
+        System.out.println("\nCedula: " + cedula);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Apellido: " + apellido);
+        System.out.println("Nota 1: " + nota1);
+        System.out.println("Nota 2: " + nota2);
+        System.out.println("Nota 3: " + nota3);
+        System.out.println("Promedio: " + promedio);
+        System.out.println("Estado: " + determinarEstado());
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        Scanner scan = new Scanner(System.in);
+
+        Estudiante[] estudiantes = new Estudiante[5];
+
+        int aprobados = 0;
+        int reprobados = 0;
+
+        for (int i = 0; i < 5; i++) {
+
+            estudiantes[i] = new Estudiante();
+
+            System.out.println("\nESTUDIANTE " + (i + 1));
+
+            System.out.print("Cedula: ");
+            estudiantes[i].setCedula(scan.next());
+
+            System.out.print("Nombre: ");
+            estudiantes[i].setNombre(scan.next());
+
+            System.out.print("Apellido: ");
+            estudiantes[i].setApellido(scan.next());
+
+            double n1, n2, n3;
+
+            do {
+                System.out.print("Nota 1: ");
+                n1 = scan.nextDouble();
+            } while (n1 < 0 || n1 > 10);
+
+            do {
+                System.out.print("Nota 2: ");
+                n2 = scan.nextDouble();
+            } while (n2 < 0 || n2 > 10);
+
+            do {
+                System.out.print("Nota 3: ");
+                n3 = scan.nextDouble();
+            } while (n3 < 0 || n3 > 10);
+
+            estudiantes[i].setNota1(n1);
+            estudiantes[i].setNota2(n2);
+            estudiantes[i].setNota3(n3);
+
+            estudiantes[i].calcularPromedio();
+
+            if (estudiantes[i].determinarEstado().equals("Aprobado")) {
+                aprobados++;
+            } else {
+                reprobados++;
+            }
+        }
+
+        System.out.println("\nLISTADO DE ESTUDIANTES");
+
+        for (int i = 0; i < 5; i++) {
+            estudiantes[i].mostrarDatos();
+        }
+
+        System.out.println("\nTotal aprobados: " + aprobados);
+        System.out.println("Total reprobados: " + reprobados);
+    }
+}
